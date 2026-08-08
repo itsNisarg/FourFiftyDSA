@@ -1,15 +1,24 @@
 # Given a string s, the task is to identify all characters that appear more than once and print each as a list containing the character and its count.
 
-def printDuplicates(s):
 
-    # Hash map to store frequency of each character
-    freq = {}
-
-    # Count frequency of each character
+def method_1(s):
+    char_count = {}
     for c in s:
-        freq[c] = freq.get(c, 0) + 1
+        char_count[c] = char_count.get(c, 0) + 1
+    duplicates = [[char, count] for char, count in char_count.items() if count > 1]
+    return duplicates
 
-    # Traverse the map and print characters with count > 1
-    for key in freq:
-        if freq[key] > 1:
-            print(["{}".format(key), freq[key]], end=", ")
+
+def method_2(s):
+    s = list(sorted(s))
+    duplicates = []
+    i = 0
+    while i < len(s):
+        count = 1
+        while i + 1 < len(s) and s[i] == s[i + 1]:
+            count += 1
+            i += 1
+        if count > 1:
+            duplicates.append([s[i], count])
+        i += 1
+    return duplicates
